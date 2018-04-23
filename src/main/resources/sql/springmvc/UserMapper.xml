@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc.demo.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.springmvc.demo.model.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="descript" jdbcType="VARCHAR" property="descript" />
+    <result column="remark1" jdbcType="VARCHAR" property="remark1" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, user_id, password, nick, birthday, mail, mobile, major, remark1, descript,
+    address, age, is_del, create_time, update_time
+  </sql>
+
+  <sql id="Base_query">
+    <if test="userName != null">
+      user_name = #{userName,jdbcType=VARCHAR},
+    </if>
+    <if test="userId != null">
+      user_id = #{userId,jdbcType=VARCHAR},
+    </if>
+    <if test="password != null">
+      password = #{password,jdbcType=VARCHAR},
+    </if>
+    <if test="nick != null">
+      nick = #{nick,jdbcType=VARCHAR},
+    </if>
+    <if test="birthday != null">
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+    </if>
+    <if test="mail != null">
+      mail = #{mail,jdbcType=VARCHAR},
+    </if>
+    <if test="mobile != null">
+      mobile = #{mobile,jdbcType=VARCHAR},
+    </if>
+    <if test="major != null">
+      major = #{major,jdbcType=VARCHAR},
+    </if>
+    <if test="remark1 != null">
+      remark1 = #{descript,jdbcType=VARCHAR},
+    </if>
+    <if test="descript != null">
+      descript = #{descript,jdbcType=VARCHAR},
+    </if>
+    <if test="address != null">
+      address = #{address,jdbcType=VARCHAR},
+    </if>
+    <if test="age != null">
+      age = #{age,jdbcType=INTEGER},
+    </if>
+    <if test="isDel != null">
+      is_del = #{isDel,jdbcType=INTEGER},
+    </if>
+    <if test="createTime != null">
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="updateTime != null">
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </if>
+  </sql>
+
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yh_user
+    where id = #{id,jdbcType=INTEGER} and is_del = 0 limit 1
+  </select>
+
+  <select id="selectByEntity" parameterType="com.springmvc.demo.model.User"
+          resultMap="BaseResultMap">
+    SELECT * FROM yh_user
+    <where>
+      <if test="id != null">
+        AND id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="userName != null">
+        AND user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null">
+        AND user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null">
+        AND password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="nick != null">
+        AND nick = #{nick,jdbcType=VARCHAR}
+      </if>
+      <if test="birthday != null">
+        AND birthday = #{birthday,jdbcType=TIMESTAMP}
+      </if>
+      <if test="mail != null">
+        AND mail = #{mail,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null">
+        AND mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="major != null">
+        AND major = #{major,jdbcType=VARCHAR}
+      </if>
+      <if test="descript != null">
+        AND descript = #{descript,jdbcType=VARCHAR}
+      </if>
+      <if test="address != null">
+        AND address = #{address,jdbcType=VARCHAR}
+      </if>
+      <if test="age != null">
+        AND age = #{age,jdbcType=INTEGER}
+      </if>
+      and is_del = 0
+    </where>
+    <choose>
+      <when test="orderBy !=null and orderBy !=''">
+        order by ${orderBy}
+      </when>
+      <otherwise>
+        order by create_time desc
+      </otherwise>
+    </choose>
+    <if test="pageIndex !=null and pageSize!=null">
+      limit #{pageIndex},#{pageSize}
+    </if>
+  </select>
+
+  <update id="delete" parameterType="java.lang.Integer">
+    update yh_user set is_del = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insert" parameterType="com.springmvc.demo.model.User" keyProperty="id" useGeneratedKeys="true">
+    insert into yh_user (user_name, user_id,
+      password, nick, birthday,
+      mail, mobile, major,
+      descript, address, age,
+      create_time, update_time
+      )
+    values (#{userName,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
+      #{mail,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR},
+      #{descript,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.springmvc.demo.model.User" keyProperty="id" useGeneratedKeys="true">
+    insert into yh_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="nick != null">
+        nick,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="mail != null">
+        mail,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="remark1 != null">
+        remark1,
+      </if>
+      <if test="descript != null">
+        descript,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null">
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="descript != null">
+        #{descript,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.springmvc.demo.model.User">
+    update yh_user
+    <set>
+     <include refid="Base_query"></include>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="count" resultType="java.lang.Integer">
+    SELECT count(*) from yh_user where is_del = 0
+  </select>
+
+</mapper>
