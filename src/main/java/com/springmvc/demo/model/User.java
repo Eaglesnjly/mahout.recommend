@@ -1,9 +1,11 @@
 package com.springmvc.demo.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class User extends BaseEntity  {
 

@@ -28,7 +28,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:/spring/applicationContext.xml</param-value>
+        <param-value>classpath*:spring/applicationContext.xml</param-value>
     </context-param>
     <listener>
         <description>spring监听器</description>
@@ -60,7 +60,7 @@
         <init-param>
             <description>springmvc 配置文件location</description>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath*:/spring/spring-mvc.xml</param-value>
+            <param-value>classpath*:spring/spring-mvc.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
