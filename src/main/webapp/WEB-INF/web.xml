@@ -52,7 +52,7 @@
     </filter-mapping>
 
 
-    <!-- springmvc sevlet 配置 -->
+    <!--mahout servlet 配置 -->
     <servlet>
         <description>springmvc 核心配置文件</description>
         <servlet-name>dispatcher</servlet-name>

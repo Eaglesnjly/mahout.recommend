@@ -12,7 +12,7 @@
 	<!-- 开启注解扫描 -->
 	<!-- <context:annotation-config /> -->
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
-	<!-- <context:component-scan base-package="com.springmvc.controller.*" /> -->
+	<!-- <context:component-scan base-package="mahoutgmvc.controller.*" /> -->
 	<!-- 默认的注解映射的支持 -->
 	<!-- <mvc:annotation-driven /> -->
 	
